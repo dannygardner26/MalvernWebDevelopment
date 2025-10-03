@@ -195,7 +195,7 @@ contactForm.addEventListener('submit', async (e) => {
 async function submitFormToAPI(formData) {
     // Check if we're running locally or on Vercel
     const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
-    const endpoint = isLocal ? '/api/contact' : '/api/contact';
+    const endpoint = isLocal ? 'http://localhost:3001/api/contact' : '/api/contact';
 
     const response = await fetch(endpoint, {
         method: 'POST',
@@ -456,7 +456,9 @@ window.addEventListener('unhandledrejection', (event) => {
     // Could send to error tracking service
 });
 
-// Service Worker registration (for future PWA features)
+// Service Worker registration (disabled for now)
+// Can be enabled later when sw.js file is created
+/*
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('/sw.js')
@@ -468,3 +470,4 @@ if ('serviceWorker' in navigator) {
             });
     });
 }
+*/
