@@ -193,7 +193,11 @@ contactForm.addEventListener('submit', async (e) => {
 
 // Submit form to backend API
 async function submitFormToAPI(formData) {
-    const response = await fetch('/api/contact', {
+    // Check if we're running locally or on Vercel
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+    const endpoint = isLocal ? '/api/contact' : '/api/contact';
+
+    const response = await fetch(endpoint, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
