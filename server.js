@@ -217,8 +217,8 @@ app.get('/', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 MWD Server running on http://localhost:${PORT}`);
-    console.log(`📧 Gmail integration: ${process.env.GMAIL_USER ? 'Configured' : 'Not configured'}`);
+    console.log(`MWD Server running on http://localhost:${PORT}`);
+    console.log(`Gmail integration: ${process.env.GMAIL_USER ? 'Configured' : 'Not configured'}`);
 });
 
 module.exports = app;
