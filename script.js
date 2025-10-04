@@ -168,9 +168,13 @@ contactForm.addEventListener('submit', async (e) => {
             business: document.getElementById('business').value,
             email: document.getElementById('email').value,
             phone: document.getElementById('phone').value,
-            projectType: document.getElementById('project-type').value,
             message: document.getElementById('message').value
         };
+
+        const projectTypeField = document.getElementById('project-type');
+        if (projectTypeField) {
+            formData.projectType = projectTypeField.value;
+        }
 
         // Submit to backend API
         const result = await submitFormToAPI(formData);

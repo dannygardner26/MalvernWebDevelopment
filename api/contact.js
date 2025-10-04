@@ -3,7 +3,7 @@ const nodemailer = require('nodemailer');
 
 // Helper function to create transporter
 const createTransporter = () => {
-    return nodemailer.createTransporter({
+    return nodemailer.createTransport({
         service: 'gmail',
         auth: {
             user: process.env.GMAIL_USER,
@@ -18,7 +18,66 @@ const isValidEmail = (email) => {
     return emailRegex.test(email);
 };
 
-export default async function handler(req, res) {
+const parseRequestBody = async (req) => {
+    if (req.body && typeof req.body === 'object' && Object.keys(req.body).length > 0) {
+        return req.body;
+    }
+
+    if (Buffer.isBuffer(req.body)) {
+        const bodyString = req.body.toString('utf8');
+
+        if (!bodyString) {
+            return {};
+        }
+
+        try {
+            return JSON.parse(bodyString);
+        } catch (error) {
+            throw new Error('Invalid JSON payload');
+        }
+    }
+
+    if (typeof req.body === 'string' && req.body.trim() !== '') {
+        try {
+            return JSON.parse(req.body);
+        } catch (error) {
+            throw new Error('Invalid JSON payload');
+        }
+    }
+
+    return await new Promise((resolve, reject) => {
+        let data = '';
+
+        req.on('data', (chunk) => {
+            data += chunk;
+
+            if (data.length > 1e6) {
+                req.destroy();
+                reject(new Error('Payload too large'));
+            }
+        });
+
+        req.on('end', () => {
+            if (!data) {
+                resolve({});
+                return;
+            }
+
+            try {
+                resolve(JSON.parse(data));
+            } catch (error) {
+                reject(new Error('Invalid JSON payload'));
+            }
+        });
+
+        req.on('error', (error) => {
+            reject(error);
+        });
+    });
+};
+
+
+module.exports = async function handler(req, res) {
     // Set CORS headers
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -40,7 +99,19 @@ export default async function handler(req, res) {
     }
 
     try {
-        const { name, business, email, phone, projectType, message } = req.body;
+        let body;
+
+        try {
+            body = await parseRequestBody(req);
+        } catch (parseError) {
+            console.error('Request body parsing failed:', parseError);
+            return res.status(400).json({
+                success: false,
+                message: 'Invalid request payload.'
+            });
+        }
+
+        const { name, business, email, phone, projectType, message } = body;
 
         // Validate required fields
         if (!name || !business || !email || !message) {
