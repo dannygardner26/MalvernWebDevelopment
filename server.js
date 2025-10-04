@@ -121,67 +121,72 @@ app.post('/api/contact', async (req, res) => {
 
         // Confirmation email to customer
         const customerEmailOptions = {
-            from: process.env.GMAIL_USER,
-            to: email,
-            subject: 'Thank you for contacting Malvern Web Development!',
-            html: `
-                <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px;">
-                    <div style="background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%); padding: 20px; border-radius: 10px 10px 0 0; text-align: center;">
-                        <h1 style="color: white; margin: 0; font-size: 24px;">Thank You!</h1>
-                        <p style="color: white; margin: 5px 0 0 0; opacity: 0.9;">We've received your message</p>
-                    </div>
-
-                    <div style="padding: 30px; background: #f9fafb;">
-                        <h2 style="color: #2563eb; margin-bottom: 20px;">Hi ${name},</h2>
-
-                        <p style="color: #374151; line-height: 1.6; margin-bottom: 20px;">
-                            Thank you for reaching out to Malvern Web Development! We're excited to learn about ${business} and how we can help you grow your business online.
-                        </p>
-
-                        <div style="background: white; padding: 20px; border-radius: 8px; border-left: 4px solid #10b981; margin-bottom: 25px;">
-                            <h3 style="color: #10b981; margin: 0 0 10px 0; font-size: 18px;">What happens next?</h3>
-                            <ul style="color: #374151; margin: 0; padding-left: 20px; line-height: 1.6;">
-                                <li>We'll review your project requirements within 24 hours</li>
-                                <li>One of our developers (Danny or Zack) will reach out to discuss your needs</li>
-                                <li>We'll provide a detailed proposal and timeline for your project</li>
-                                <li>If you approve, we'll start building your digital solution!</li>
-                            </ul>
-                        </div>
-
-                        <div style="background: #eff6ff; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
-                            <h3 style="color: #2563eb; margin: 0 0 15px 0; font-size: 18px;">Your submission summary:</h3>
-                            <div style="color: #374151;">
-                                <p><strong>Business:</strong> ${business}</p>
-                                <p><strong>Email:</strong> ${email}</p>
-                                ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
-                                ${projectType ? `<p><strong>Project Type:</strong> ${projectType}</p>` : ''}
-                            </div>
-                        </div>
-
-                        <p style="color: #374151; line-height: 1.6; margin-bottom: 20px;">
-                            In the meantime, feel free to check out our portfolios to see examples of our work:
-                        </p>
-
-                        <div style="text-align: center; margin: 25px 0;">
-                            <a href="https://dannygardner.me" style="display: inline-block; background: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; margin: 0 10px; font-weight: bold;">Danny's Portfolio</a>
-                            <a href="https://skyshotaerial.com" style="display: inline-block; background: #2563eb; color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; margin: 0 10px; font-weight: bold;">Zack's Portfolio</a>
-                        </div>
-
-                        <p style="color: #6b7280; font-size: 14px; line-height: 1.6; margin: 0;">
-                            If you have any urgent questions, feel free to reply to this email or call us at (484) 885-6284. We're here to help!
-                        </p>
-                    </div>
-
-                    <div style="background: #374151; color: white; padding: 20px; border-radius: 0 0 10px 10px; text-align: center;">
-                        <p style="margin: 0 0 10px 0; font-weight: bold;">Malvern Web Development</p>
-                        <p style="margin: 0; font-size: 14px; opacity: 0.8;">Building Digital Solutions for Local Businesses</p>
-                        <p style="margin: 10px 0 0 0; font-size: 14px;">
-                            <a href="mailto:malvernwd@gmail.com" style="color: #60a5fa; text-decoration: none;">malvernwd@gmail.com</a> | (484) 885-6284
-                        </p>
-                    </div>
-                </div>
-            `
-        };
+        from: process.env.GMAIL_USER,
+        to: email,
+        subject: 'Thanks for reaching out to Malvern Web Development',
+        html: `
+            <table role="presentation" style="width: 100%; background: #f4f6fb; padding: 0; margin: 0;">
+                <tr>
+                    <td align="center" style="padding: 30px 15px;">
+                        <table role="presentation" style="width: 100%; max-width: 620px; background: #ffffff; border-radius: 14px; overflow: hidden; box-shadow: 0 12px 32px rgba(15, 23, 42, 0.08); font-family: 'Segoe UI', Arial, sans-serif;">
+                            <tr>
+                                <td style="background: linear-gradient(135deg, #0f172a, #1d4ed8); padding: 28px 32px;">
+                                    <h1 style="margin: 0; font-size: 24px; line-height: 32px; color: #f8fafc;">Malvern Web Development</h1>
+                                    <p style="margin: 6px 0 0 0; font-size: 16px; color: rgba(248, 250, 252, 0.8);">We received your message.</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 32px;">
+                                    <p style="margin: 0 0 16px 0; font-size: 18px; font-weight: 600; color: #0f172a;">Hi ${name},</p>
+                                    <p style="margin: 0 0 20px 0; font-size: 15px; line-height: 24px; color: #334155;">
+                                        Thanks for connecting with Malvern Web Development. Our team is reviewing the details you shared about ${business}, and we'll be in touch within one business day.
+                                    </p>
+                                    <table role="presentation" style="width: 100%; border-collapse: collapse; margin: 0 0 28px 0;">
+                                        <tr>
+                                            <td style="background: #f8fafc; border-radius: 10px; padding: 20px 24px;">
+                                                <h2 style="margin: 0 0 12px 0; font-size: 16px; line-height: 24px; color: #1d4ed8;">What happens next</h2>
+                                                <ol style="margin: 0; padding-left: 20px; font-size: 15px; line-height: 24px; color: #334155;">
+                                                    <li>We confirm your project goals and timeline.</li>
+                                                    <li>We schedule a quick call to align on scope and budget.</li>
+                                                    <li>We send a tailored proposal with clear next steps.</li>
+                                                </ol>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 20px 24px; margin-bottom: 28px;">
+                                        <h2 style="margin: 0 0 12px 0; font-size: 16px; line-height: 24px; color: #1d4ed8;">Your submission</h2>
+                                        <p style="margin: 0 0 8px 0; font-size: 15px; color: #334155;"><strong style="color: #0f172a;">Business</strong>: ${business}</p>
+                                        <p style="margin: 0 0 8px 0; font-size: 15px; color: #334155;"><strong style="color: #0f172a;">Email</strong>: ${email}</p>
+                                        ${phone ? `<p style="margin: 0 0 8px 0; font-size: 15px; color: #334155;"><strong style="color: #0f172a;">Phone</strong>: ${phone}</p>` : ''}
+                                        ${projectType ? `<p style="margin: 0 0 8px 0; font-size: 15px; color: #334155;"><strong style="color: #0f172a;">Project Type</strong>: ${projectType}</p>` : ''}
+                                        ${message ? `<div style="margin-top: 14px;"><strong style="display: block; margin-bottom: 6px; font-size: 14px; color: #0f172a;">Message</strong><div style="background: #f8fafc; border-radius: 8px; padding: 16px; color: #334155; font-size: 15px; line-height: 24px;">${message.replace(/\n/g, '<br>')}</div></div>` : ''}
+                                    </div>
+                                    <p style="margin: 0 0 18px 0; font-size: 15px; line-height: 24px; color: #334155;">
+                                        Have something new to add? Reply to this email or call us at <a href="tel:14848856284" style="color: #1d4ed8; text-decoration: none;">(484) 885-6284</a>.
+                                    </p>
+                                    <table role="presentation" style="width: 100%; margin: 0 0 12px 0;">
+                                        <tr>
+                                            <td style="text-align: left;">
+                                                <a href="https://dannygardner.me" style="display: inline-block; margin-right: 12px; padding: 12px 20px; border-radius: 8px; border: 1px solid #1d4ed8; color: #1d4ed8; font-size: 14px; font-weight: 600; text-decoration: none;">View Danny's work</a>
+                                                <a href="https://skyshotaerial.com" style="display: inline-block; padding: 12px 20px; border-radius: 8px; background: #1d4ed8; color: #ffffff; font-size: 14px; font-weight: 600; text-decoration: none;">View Zack's work</a>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <p style="margin: 0; font-size: 14px; line-height: 22px; color: #64748b;">Talk soon,<br>Malvern Web Development</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="background: #0f172a; color: rgba(226, 232, 240, 0.7); text-align: center; padding: 20px 24px; font-size: 13px;">
+                                    <p style="margin: 0 0 6px 0;">Malvern Web Development</p>
+                                    <p style="margin: 0;"><a href="mailto:malvernwd@gmail.com" style="color: rgba(96, 165, 250, 0.9); text-decoration: none;">malvernwd@gmail.com</a> | (484) 885-6284</p>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        `
+    };
 
         // Send both emails
         await transporter.sendMail(teamEmailOptions);
@@ -217,3 +222,4 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
